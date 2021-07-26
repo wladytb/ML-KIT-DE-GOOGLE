@@ -6,13 +6,136 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linerTxtImg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        android:background="#E3E4E5"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:fitsSystemWindows="false"
+            android:freezesText="false"
+            android:gravity="center"
+            android:text="Imagen"
+            android:textSize="20dp"
+            />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat2"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linerTxtImg"
+        tools:ignore="MissingConstraints"
+        android:layout_marginTop="4dp"
+        >
+
+        <ImageView
+            android:id="@+id/imagemId"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/photo_foreground" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linerTxtResul"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="#E3E4E5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat2"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:fitsSystemWindows="false"
+            android:freezesText="false"
+            android:gravity="center"
+            android:text="Resultados"
+            android:textSize="20dp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btnAccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_gravity="end"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="#009C8C"
+        android:textColor="@color/white"
+        app:iconSize="50dp"
+        app:icon="@drawable/more_foreground"
+        app:iconTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="8dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnTomarFoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#009C8C"
+        android:contentDescription="@string/app_name"
+        app:fabSize="normal"
+        app:maxImageSize="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAccion"
+        app:layout_constraintEnd_toEndOf="@+id/btnAccion"
+        app:srcCompat="@drawable/camera_foreground"
+        app:tint="@color/white"
+        tools:ignore="VectorDrawableCompat"
+        android:elevation="8dp"/>
+    <TextView
+        android:id="@+id/txtNameTomarFoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Abrir cámara"
+        app:layout_constraintBottom_toBottomOf="@+id/btnTomarFoto"
+        app:layout_constraintEnd_toStartOf="@+id/btnTomarFoto"
+        app:layout_constraintTop_toTopOf="@+id/btnTomarFoto"
+        android:layout_marginRight="8dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnSeleccionarFoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#009C8C"
+        android:contentDescription="@string/app_name"
+        app:fabSize="normal"
+        app:maxImageSize="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnTomarFoto"
+        app:layout_constraintEnd_toEndOf="@+id/btnTomarFoto"
+        app:layout_constraintStart_toStartOf="@+id/btnTomarFoto"
+        app:srcCompat="@drawable/image_foreground"
+        app:tint="@color/white"
+        tools:ignore="VectorDrawableCompat"
+        android:elevation="8dp"/>
+    <TextView
+        android:id="@+id/txtNameSeleccionaFoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Explorar imagen"
+        app:layout_constraintBottom_toBottomOf="@+id/btnSeleccionarFoto"
+        app:layout_constraintEnd_toStartOf="@+id/btnSeleccionarFoto"
+        app:layout_constraintTop_toTopOf="@+id/btnSeleccionarFoto"
+        android:layout_marginRight="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
