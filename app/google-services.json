@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "575299317964",
+    "project_id": "machine-learning-be2e1",
+    "storage_bucket": "machine-learning-be2e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575299317964:android:7f289ae7a0277e3857d269",
+        "android_client_info": {
+          "package_name": "com.wladytb.mlkitgoogle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "575299317964-o18c3gkqpqdc84pmjhj86g0dlu9allpq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC02GQVFAlUAatZDyjsVv-P3w7yCquXEwg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "575299317964-o18c3gkqpqdc84pmjhj86g0dlu9allpq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

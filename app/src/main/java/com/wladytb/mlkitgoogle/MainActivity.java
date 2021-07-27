@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,26 +18,42 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.mlkit.vision.common.*;
+import com.google.mlkit.vision.label.*;
+
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton btnTomarFoto, btnSeleccionarFoto;
     ExtendedFloatingActionButton btnAccion;
-    TextView txtNameTomarFoto, txtNameSeleccionaFoto;
+    TextView txtNameTomarFoto, txtNameSeleccionaFoto, txtResul;
     Boolean bandera;
     ImageView imagen;
+    InputImage inputImage;
+    ImageLabeler labeler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
+        labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS);
+
         setContentView(R.layout.activity_main);
         btnAccion = findViewById(R.id.btnAccion);
         btnTomarFoto = findViewById(R.id.btnTomarFoto);
         btnSeleccionarFoto = findViewById(R.id.btnSeleccionarFoto);
         imagen = (ImageView) findViewById(R.id.imagemId);
+        txtResul = (TextView) findViewById(R.id.txtResul);
         txtNameTomarFoto = findViewById(R.id.txtNameTomarFoto);
         txtNameSeleccionaFoto = findViewById(R.id.txtNameSeleccionaFoto);
         btnSeleccionarFoto.setVisibility(View.GONE);
@@ -125,9 +142,39 @@ public class MainActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap bitmap = (Bitmap) extras.get("data");
             imagen.setImageBitmap(bitmap);
+            try {
+                inputImage = InputImage.fromBitmap(bitmap, 0);
+                procesarIMG();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else if (resultCode == RESULT_OK && requestCode == 10) {
             Uri path = data.getData();
             imagen.setImageURI(path);
+            try {
+                inputImage = InputImage.fromFilePath(MainActivity.this, path);
+                procesarIMG();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    private void procesarIMG() {
+        labeler.process(inputImage).addOnSuccessListener(new OnSuccessListener<List<ImageLabel>>() {
+            @Override
+            public void onSuccess(@NonNull @NotNull List<ImageLabel> imageLabels) {
+                txtResul.setText("");
+                for (ImageLabel label : imageLabels) {
+                    txtResul.append("\n" + label.getText());
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                txtResul.setText("");
+                txtResul.append("\n error: " + e.getMessage());
+            }
+        });
     }
 }

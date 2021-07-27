@@ -66,8 +66,29 @@
             android:gravity="center"
             android:text="Resultados"
             android:textSize="20dp" />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linerTxtResulIMG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linerTxtResul"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/txtResul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="false"
+            android:freezesText="false"
+            android:gravity="start"
+            android:text=""
+            android:textSize="15dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btnAccion"
         android:layout_width="wrap_content"
