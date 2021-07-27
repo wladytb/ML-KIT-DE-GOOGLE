@@ -10,7 +10,7 @@ esta es una imagen selecionada de galería:<br/>
 Reconoce la imagen:<br/>
 <img width="50%" src="capturas/imagenReconocida.jpg"alt=""/><br/>
 Reconoce el Texto:<br/>
-<img width="50%" src="capturas-loginPractica/textoReconocido.jpg"alt=""/><br/>
+<img width="50%" src="capturas/textoReconocido.jpg"alt=""/><br/>
 Reconoce una foto tomado con la cámara del teléfono:<br/>
 <img width="50%" src="capturas/camara-imagenReconocida.jpg"alt=""/><br/>
 
