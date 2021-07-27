@@ -11,12 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
+        android:background="#E3E4E5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        android:background="#E3E4E5"
-        >
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:layout_width="match_parent"
@@ -25,20 +24,18 @@
             android:freezesText="false"
             android:gravity="center"
             android:text="Imagen"
-            android:textSize="20dp"
-            />
+            android:textSize="20dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearLayoutCompat2"
         android:layout_width="match_parent"
         android:layout_height="400dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linerTxtImg"
-        tools:ignore="MissingConstraints"
-        android:layout_marginTop="4dp"
-        >
+        tools:ignore="MissingConstraints">
 
         <ImageView
             android:id="@+id/imagemId"
@@ -72,23 +69,31 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linerTxtResulIMG"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linerTxtResul"
         tools:ignore="MissingConstraints">
 
-        <TextView
-            android:id="@+id/txtResul"
+        <ScrollView
+            android:id="@+id/SCROLLER_ID"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="false"
-            android:freezesText="false"
-            android:gravity="start"
-            android:text=""
-            android:textSize="15dp" />
+            android:layout_height="fill_parent"
+            android:fillViewport="true"
+            android:scrollbars="vertical">
 
+            <TextView
+                android:id="@+id/txtResul"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="false"
+                android:freezesText="false"
+                android:gravity="start"
+                android:text=""
+                android:textSize="15dp" />
+        </ScrollView>
     </androidx.appcompat.widget.LinearLayoutCompat>
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btnAccion"
         android:layout_width="wrap_content"
@@ -96,15 +101,15 @@
         android:layout_gravity="end"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="38dp"
         android:backgroundTint="#009C8C"
+        android:elevation="8dp"
         android:textColor="@color/white"
-        app:iconSize="50dp"
         app:icon="@drawable/more_foreground"
+        app:iconSize="50dp"
         app:iconTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:elevation="8dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnTomarFoto"
@@ -113,24 +118,25 @@
         android:layout_marginBottom="10dp"
         android:backgroundTint="#009C8C"
         android:contentDescription="@string/app_name"
+        android:elevation="8dp"
         app:fabSize="normal"
-        app:maxImageSize="50dp"
         app:layout_constraintBottom_toTopOf="@+id/btnAccion"
         app:layout_constraintEnd_toEndOf="@+id/btnAccion"
+        app:maxImageSize="50dp"
         app:srcCompat="@drawable/camera_foreground"
         app:tint="@color/white"
-        tools:ignore="VectorDrawableCompat"
-        android:elevation="8dp"/>
+        tools:ignore="VectorDrawableCompat" />
+
     <TextView
         android:id="@+id/txtNameTomarFoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="Abrir cámara"
         app:layout_constraintBottom_toBottomOf="@+id/btnTomarFoto"
         app:layout_constraintEnd_toStartOf="@+id/btnTomarFoto"
-        app:layout_constraintTop_toTopOf="@+id/btnTomarFoto"
-        android:layout_marginRight="8dp" />
+        app:layout_constraintTop_toTopOf="@+id/btnTomarFoto" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnSeleccionarFoto"
@@ -139,24 +145,67 @@
         android:layout_marginBottom="10dp"
         android:backgroundTint="#009C8C"
         android:contentDescription="@string/app_name"
+        android:elevation="8dp"
         app:fabSize="normal"
-        app:maxImageSize="50dp"
         app:layout_constraintBottom_toTopOf="@+id/btnTomarFoto"
         app:layout_constraintEnd_toEndOf="@+id/btnTomarFoto"
         app:layout_constraintStart_toStartOf="@+id/btnTomarFoto"
+        app:maxImageSize="50dp"
         app:srcCompat="@drawable/image_foreground"
         app:tint="@color/white"
-        tools:ignore="VectorDrawableCompat"
-        android:elevation="8dp"/>
+        tools:ignore="VectorDrawableCompat" />
+
     <TextView
         android:id="@+id/txtNameSeleccionaFoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="Explorar imagen"
         app:layout_constraintBottom_toBottomOf="@+id/btnSeleccionarFoto"
         app:layout_constraintEnd_toStartOf="@+id/btnSeleccionarFoto"
-        app:layout_constraintTop_toTopOf="@+id/btnSeleccionarFoto"
-        android:layout_marginRight="8dp" />
+        app:layout_constraintTop_toTopOf="@+id/btnSeleccionarFoto" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linerTxtResulIMG">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:text="Funciones: "
+            android:textColor="#000"
+            android:textSize="15dp"
+            android:textStyle="bold"></TextView>
+
+        <RadioGroup
+            android:id="@+id/grupoRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rdImgLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="fnIMgLabe"
+                android:text="Image labeling" />
+
+            <RadioButton
+                android:id="@+id/rdTxtReco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:onClick="fnIMgTxt"
+                android:text="Text recognition" />
+        </RadioGroup>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

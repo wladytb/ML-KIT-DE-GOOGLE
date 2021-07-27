@@ -8,6 +8,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Build;
@@ -15,17 +17,22 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.mlkit.vision.common.*;
 import com.google.mlkit.vision.label.*;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
+import com.google.mlkit.vision.text.Text;
+import com.google.mlkit.vision.text.TextRecognition;
+import com.google.mlkit.vision.text.TextRecognizer;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -38,8 +45,9 @@ public class MainActivity extends AppCompatActivity {
     TextView txtNameTomarFoto, txtNameSeleccionaFoto, txtResul;
     Boolean bandera;
     ImageView imagen;
-    InputImage inputImage;
     ImageLabeler labeler;
+    boolean imglabel = false, imgtxt = false;
+    InputImage inputImage = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
         labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS);
-
         setContentView(R.layout.activity_main);
         btnAccion = findViewById(R.id.btnAccion);
         btnTomarFoto = findViewById(R.id.btnTomarFoto);
@@ -75,7 +82,10 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        selecionaImagen();
+                        if (imglabel || imgtxt)
+                            selecionaImagen();
+                        else
+                            Toast.makeText(MainActivity.this, "Selecione una función!", Toast.LENGTH_SHORT).show();
                     }
                 });
         btnTomarFoto.setOnClickListener(
@@ -83,14 +93,31 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
-                                tomarFoto();
-                            else
+                            if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                                if (imglabel || imgtxt)
+                                    tomarFoto();
+                                else
+                                    Toast.makeText(MainActivity.this, "Selecione una función!", Toast.LENGTH_SHORT).show();
+                            } else
                                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 1);
                         } else
                             tomarFoto();
                     }
                 });
+    }
+
+    public void fnIMgLabe(View view) {
+        if (inputImage != null)
+            procesarIMG(inputImage);
+        imglabel = true;
+        imgtxt = false;
+    }
+
+    public void fnIMgTxt(View view) {
+        if (inputImage != null)
+            processText(inputImage);
+        imglabel = false;
+        imgtxt = true;
     }
 
     public void flotarBtns() {
@@ -144,7 +171,11 @@ public class MainActivity extends AppCompatActivity {
             imagen.setImageBitmap(bitmap);
             try {
                 inputImage = InputImage.fromBitmap(bitmap, 0);
-                procesarIMG();
+                if (imglabel)
+                    procesarIMG(inputImage);
+                else if (imgtxt)
+                    processText(inputImage);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -153,14 +184,19 @@ public class MainActivity extends AppCompatActivity {
             imagen.setImageURI(path);
             try {
                 inputImage = InputImage.fromFilePath(MainActivity.this, path);
-                procesarIMG();
+                if (imglabel)
+                    procesarIMG(inputImage);
+                else if (imgtxt)
+                    processText(inputImage);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void procesarIMG() {
+    private void procesarIMG(InputImage inputImage) {
+        if (inputImage == null)
+            return;
         labeler.process(inputImage).addOnSuccessListener(new OnSuccessListener<List<ImageLabel>>() {
             @Override
             public void onSuccess(@NonNull @NotNull List<ImageLabel> imageLabels) {
@@ -168,13 +204,43 @@ public class MainActivity extends AppCompatActivity {
                 for (ImageLabel label : imageLabels) {
                     txtResul.append("\n" + label.getText());
                 }
+                Toast.makeText(getApplicationContext(), "Imagen detectada!", Toast.LENGTH_LONG).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull @NotNull Exception e) {
                 txtResul.setText("");
                 txtResul.append("\n error: " + e.getMessage());
+                Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void processText(InputImage inputImage) {
+        if (inputImage == null)
+            return;
+        TextRecognition.getClient().process(inputImage)
+                .addOnSuccessListener(new OnSuccessListener<Text>() {
+                    @Override
+                    public void onSuccess(Text visionText) {
+                        if (visionText.getText().equals("")) {
+                            txtResul.setText("");
+                            txtResul.setText("No hay texto");
+                        } else {
+                            txtResul.setText("");
+                            txtResul.setText(visionText.getText());
+                        }
+                        Toast.makeText(getApplicationContext(), "Texto detectado!", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(
+                        new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                txtResul.setText("");
+                                txtResul.setText("No hay texto");
+                                Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_LONG).show();
+                            }
+                        });
     }
 }

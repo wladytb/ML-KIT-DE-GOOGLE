@@ -43,4 +43,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 
     implementation 'com.google.mlkit:image-labeling:17.0.5'
+
+    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:16.3.0'
 }
